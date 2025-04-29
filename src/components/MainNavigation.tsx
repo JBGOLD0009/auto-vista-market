@@ -12,6 +12,8 @@ import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 const MainNavigation: React.FC = () => {
+  const [hoveredItem, setHoveredItem] = React.useState<string | null>(null);
+  
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -23,9 +25,16 @@ const MainNavigation: React.FC = () => {
           </Link>
         </NavigationMenuItem>
 
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Vehículos</NavigationMenuTrigger>
-          <NavigationMenuContent>
+        <NavigationMenuItem 
+          onMouseEnter={() => setHoveredItem("vehicles")}
+          onMouseLeave={() => setHoveredItem(null)}
+        >
+          <NavigationMenuTrigger 
+            className={hoveredItem === "vehicles" ? "data-[state=open]:bg-accent/50" : ""}
+          >
+            Vehículos
+          </NavigationMenuTrigger>
+          <NavigationMenuContent className={hoveredItem === "vehicles" ? "data-[motion=from-start]:animate-in" : ""}>
             <div className="grid gap-3 p-4 md:w-[400px] lg:w-[500px]">
               <Link to="/vehicles?type=nuevos" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                 <div className="text-sm font-medium leading-none">Nuevos</div>
@@ -55,9 +64,16 @@ const MainNavigation: React.FC = () => {
           </NavigationMenuContent>
         </NavigationMenuItem>
 
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Marcas</NavigationMenuTrigger>
-          <NavigationMenuContent>
+        <NavigationMenuItem
+          onMouseEnter={() => setHoveredItem("brands")}
+          onMouseLeave={() => setHoveredItem(null)}
+        >
+          <NavigationMenuTrigger 
+            className={hoveredItem === "brands" ? "data-[state=open]:bg-accent/50" : ""}
+          >
+            Marcas
+          </NavigationMenuTrigger>
+          <NavigationMenuContent className={hoveredItem === "brands" ? "data-[motion=from-start]:animate-in" : ""}>
             <div className="grid grid-cols-2 gap-3 p-4 md:w-[400px] lg:w-[500px]">
               {["Toyota", "Honda", "Ford", "Tesla", "BMW", "Mercedes", "Audi", "Volkswagen", "Nissan", "Hyundai"].map((brand) => (
                 <Link 
