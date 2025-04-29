@@ -84,6 +84,84 @@ const vehiclesData = [
     image: './assets/images/vehicles/mercedes-cclass.jpg',
     badge: 'Premium',
     isFeatured: true
+  },
+  {
+    id: 7,
+    brand: 'Audi',
+    model: 'A3',
+    year: 2022,
+    price: 42000,
+    mileage: 3500,
+    fuel: 'Gasolina',
+    transmission: 'Automática',
+    image: './assets/images/vehicles/audi-a3.jpg',
+    badge: 'Premium',
+    isFeatured: true
+  },
+  {
+    id: 8,
+    brand: 'Volkswagen',
+    model: 'Golf',
+    year: 2023,
+    price: 28500,
+    mileage: 0,
+    fuel: 'Gasolina',
+    transmission: 'Manual',
+    image: './assets/images/vehicles/vw-golf.jpg',
+    badge: 'Nuevo',
+    isFeatured: true
+  },
+  {
+    id: 9,
+    brand: 'Nissan',
+    model: 'Qashqai',
+    year: 2022,
+    price: 29800,
+    mileage: 7500,
+    fuel: 'Gasolina',
+    transmission: 'Automática',
+    image: './assets/images/vehicles/nissan-qashqai.jpg',
+    badge: 'Seminuevo',
+    isFeatured: true
+  },
+  {
+    id: 10,
+    brand: 'Hyundai',
+    model: 'Tucson',
+    year: 2023,
+    price: 31500,
+    mileage: 0,
+    fuel: 'Híbrido',
+    transmission: 'Automática',
+    image: './assets/images/vehicles/hyundai-tucson.jpg',
+    badge: 'Nuevo',
+    isFeatured: true
+  },
+  {
+    id: 11,
+    brand: 'Kia',
+    model: 'Sportage',
+    year: 2022,
+    price: 30400,
+    mileage: 5000,
+    fuel: 'Gasolina',
+    transmission: 'Automática',
+    image: './assets/images/vehicles/kia-sportage.jpg',
+    badge: 'Oferta',
+    isFeatured: true
+  },
+  {
+    id: 12,
+    brand: 'Mazda',
+    model: 'CX-5',
+    year: 2023,
+    price: 33900,
+    mileage: 0,
+    fuel: 'Gasolina',
+    transmission: 'Automática',
+    image: './assets/images/vehicles/mazda-cx5.jpg',
+    badge: 'Nuevo',
+    isFeatured: true
   }
 ];
 
@@ -101,7 +179,10 @@ function loadFeaturedVehicles() {
   
   let html = '';
   
-  featuredVehicles.forEach(vehicle => {
+  // Only show the first 6 featured vehicles on the homepage
+  const displayVehicles = featuredVehicles.slice(0, 6);
+  
+  displayVehicles.forEach(vehicle => {
     html += createVehicleCard(vehicle);
   });
   

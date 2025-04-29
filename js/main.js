@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeader();
   initSearch();
   initNewsletter();
+  initDropdowns();
   
   console.log('AutoVista Market - Application initialized');
 });
@@ -35,6 +36,39 @@ function initHeader() {
   });
 }
 
+// Dropdown menu functionality
+function initDropdowns() {
+  const dropdowns = document.querySelectorAll('.dropdown');
+  
+  dropdowns.forEach(dropdown => {
+    dropdown.addEventListener('mouseenter', () => {
+      dropdown.classList.add('active');
+    });
+    
+    dropdown.addEventListener('mouseleave', () => {
+      dropdown.classList.remove('active');
+    });
+    
+    // For touch devices
+    dropdown.addEventListener('click', (e) => {
+      // Only handle dropdown behavior if clicked on the main link
+      if (e.target === dropdown.querySelector('a')) {
+        e.preventDefault();
+        dropdown.classList.toggle('active');
+      }
+    });
+  });
+  
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.dropdown')) {
+      document.querySelectorAll('.dropdown').forEach(dropdown => {
+        dropdown.classList.remove('active');
+      });
+    }
+  });
+}
+
 // Search functionality
 function initSearch() {
   const searchToggle = document.getElementById('search-toggle');
@@ -56,12 +90,8 @@ function initSearch() {
       e.preventDefault();
       const searchTerm = searchInput.value.trim();
       if (searchTerm) {
-        // In a real application, this would redirect to search results
-        // For now, we'll just show an alert
-        alert(`Searching for: ${searchTerm}`);
-        
-        // Optionally, redirect to the vehicles page with the search term
-        // window.location.href = `./pages/vehicles.html?search=${encodeURIComponent(searchTerm)}`;
+        // Redirect to the vehicles page with the search term
+        window.location.href = `./pages/vehicles.html?search=${encodeURIComponent(searchTerm)}`;
       }
     });
   }
@@ -158,4 +188,20 @@ function showToast(message, type = 'info') {
       toast.remove();
     }, 300);
   }, 3000);
+}
+
+// Parse URL query parameters
+function getQueryParams() {
+  const params = {};
+  const queryString = window.location.search.substring(1);
+  const pairs = queryString.split('&');
+  
+  pairs.forEach(pair => {
+    if (pair) {
+      const keyValue = pair.split('=');
+      params[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1] || '');
+    }
+  });
+  
+  return params;
 }

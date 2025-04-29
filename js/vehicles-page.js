@@ -5,7 +5,64 @@ document.addEventListener('DOMContentLoaded', () => {
   loadAllVehicles();
   initFilters();
   initPriceRange();
+  applyQueryFilters();
 });
+
+// Get URL query parameters and apply filters
+function applyQueryFilters() {
+  const params = getQueryParams();
+  
+  // Apply brand filter
+  if (params.brand) {
+    const brandCheckbox = document.querySelector(`input[name="brand"][value="${params.brand}"]`);
+    if (brandCheckbox) {
+      brandCheckbox.checked = true;
+    }
+  }
+  
+  // Apply type filter
+  if (params.type) {
+    const typeCheckbox = document.querySelector(`input[name="type"][value="${params.type}"]`);
+    if (typeCheckbox) {
+      typeCheckbox.checked = true;
+    } else {
+      // Handle special case for "nuevos", "usados", "ofertas"
+      if (params.type === 'nuevos') {
+        document.querySelectorAll('.vehicle-card').forEach(card => {
+          if (!card.querySelector('.vehicle-badge') || card.querySelector('.vehicle-badge').textContent !== 'Nuevo') {
+            card.style.display = 'none';
+          }
+        });
+      } else if (params.type === 'usados' || params.type === 'seminuevos') {
+        document.querySelectorAll('.vehicle-card').forEach(card => {
+          if (!card.querySelector('.vehicle-badge') || card.querySelector('.vehicle-badge').textContent !== 'Seminuevo') {
+            card.style.display = 'none';
+          }
+        });
+      } else if (params.type === 'ofertas') {
+        document.querySelectorAll('.vehicle-card').forEach(card => {
+          if (!card.querySelector('.vehicle-badge') || card.querySelector('.vehicle-badge').textContent !== 'Oferta') {
+            card.style.display = 'none';
+          }
+        });
+      }
+    }
+  }
+  
+  // Apply search filter
+  if (params.search) {
+    const searchInput = document.getElementById('search-input-page');
+    if (searchInput) {
+      searchInput.value = params.search;
+      searchVehicles(params.search);
+    }
+  }
+  
+  // If any filter is applied, trigger the filter application
+  if (params.brand || params.type || params.search) {
+    applyFilters();
+  }
+}
 
 // Extended vehicle data for the vehicles page
 const allVehiclesData = [
@@ -163,6 +220,111 @@ const allVehiclesData = [
     type: 'SUV',
     image: '../assets/images/vehicles/kia-sportage.jpg',
     badge: 'Oferta'
+  },
+  // New vehicles
+  {
+    id: 13,
+    brand: 'Mazda',
+    model: 'CX-5',
+    year: 2022,
+    price: 34900,
+    mileage: 5000,
+    fuel: 'Gasolina',
+    transmission: 'Automática',
+    type: 'SUV',
+    image: '../assets/images/vehicles/mazda-cx5.jpg',
+    badge: 'Seminuevo'
+  },
+  {
+    id: 14,
+    brand: 'Subaru',
+    model: 'Forester',
+    year: 2023,
+    price: 36700,
+    mileage: 0,
+    fuel: 'Gasolina',
+    transmission: 'Automática',
+    type: 'SUV',
+    image: '../assets/images/vehicles/subaru-forester.jpg',
+    badge: 'Nuevo'
+  },
+  {
+    id: 15,
+    brand: 'Jeep',
+    model: 'Wrangler',
+    year: 2022,
+    price: 49800,
+    mileage: 7000,
+    fuel: 'Gasolina',
+    transmission: 'Manual',
+    type: 'SUV',
+    image: '../assets/images/vehicles/jeep-wrangler.jpg',
+    badge: 'Premium'
+  },
+  {
+    id: 16,
+    brand: 'Chevrolet',
+    model: 'Camaro',
+    year: 2021,
+    price: 52000,
+    mileage: 12000,
+    fuel: 'Gasolina',
+    transmission: 'Automática',
+    type: 'Coupé',
+    image: '../assets/images/vehicles/chevrolet-camaro.jpg',
+    badge: 'Oferta'
+  },
+  {
+    id: 17,
+    brand: 'Volvo',
+    model: 'XC60',
+    year: 2023,
+    price: 59900,
+    mileage: 0,
+    fuel: 'Híbrido',
+    transmission: 'Automática',
+    type: 'SUV',
+    image: '../assets/images/vehicles/volvo-xc60.jpg',
+    badge: 'Nuevo'
+  },
+  {
+    id: 18,
+    brand: 'Porsche',
+    model: 'Cayenne',
+    year: 2022,
+    price: 89500,
+    mileage: 5000,
+    fuel: 'Gasolina',
+    transmission: 'Automática',
+    type: 'SUV',
+    image: '../assets/images/vehicles/porsche-cayenne.jpg',
+    badge: 'Lujo'
+  },
+  {
+    id: 19,
+    brand: 'Land Rover',
+    model: 'Range Rover',
+    year: 2023,
+    price: 94000,
+    mileage: 0,
+    fuel: 'Diesel',
+    transmission: 'Automática',
+    type: 'SUV',
+    image: '../assets/images/vehicles/range-rover.jpg',
+    badge: 'Lujo'
+  },
+  {
+    id: 20,
+    brand: 'Mini',
+    model: 'Cooper',
+    year: 2022,
+    price: 31800,
+    mileage: 10000,
+    fuel: 'Gasolina',
+    transmission: 'Manual',
+    type: 'Hatchback',
+    image: '../assets/images/vehicles/mini-cooper.jpg',
+    badge: 'Premium'
   }
 ];
 
@@ -173,6 +335,46 @@ function loadAllVehicles() {
   
   renderVehicles(allVehiclesData, vehiclesContainer);
   updateResultsCount(allVehiclesData.length);
+}
+
+// Search vehicles
+function searchVehicles(searchTerm) {
+  if (!searchTerm) {
+    loadAllVehicles();
+    return;
+  }
+  
+  const searchTermLower = searchTerm.toLowerCase();
+  const filteredVehicles = allVehiclesData.filter(vehicle => 
+    vehicle.brand.toLowerCase().includes(searchTermLower) ||
+    vehicle.model.toLowerCase().includes(searchTermLower) ||
+    vehicle.year.toString().includes(searchTermLower) ||
+    vehicle.fuel.toLowerCase().includes(searchTermLower) ||
+    vehicle.type.toLowerCase().includes(searchTermLower)
+  );
+  
+  const vehiclesContainer = document.getElementById('vehicles-container');
+  renderVehicles(filteredVehicles, vehiclesContainer);
+  updateResultsCount(filteredVehicles.length);
+  
+  // Show toast
+  showToast(`Se encontraron ${filteredVehicles.length} vehículos que coinciden con tu búsqueda.`, 'info');
+}
+
+// Get URL query parameters
+function getQueryParams() {
+  const params = {};
+  const queryString = window.location.search.substring(1);
+  const pairs = queryString.split('&');
+  
+  pairs.forEach(pair => {
+    if (pair) {
+      const keyValue = pair.split('=');
+      params[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1] || '');
+    }
+  });
+  
+  return params;
 }
 
 // Render vehicles to container
