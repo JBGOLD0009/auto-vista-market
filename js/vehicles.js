@@ -193,6 +193,12 @@ function loadFeaturedVehicles() {
   favoriteButtons.forEach(button => {
     button.addEventListener('click', toggleFavorite);
   });
+  
+  // Add event listeners for details buttons
+  const detailsButtons = document.querySelectorAll('.btn-details');
+  detailsButtons.forEach(button => {
+    button.addEventListener('click', showVehicleDetails);
+  });
 }
 
 // Create vehicle card HTML
@@ -212,7 +218,7 @@ function createVehicleCard(vehicle) {
           <span><img src="./assets/icons/gear.svg" alt="Transmisión"> ${vehicle.transmission}</span>
         </div>
         <div class="vehicle-actions">
-          <a href="./pages/vehicle-detail.html?id=${vehicle.id}" class="btn-details">Ver Detalles</a>
+          <button class="btn-details" data-vehicle-id="${vehicle.id}">Ver Detalles</button>
           <button class="btn-favorite" data-vehicle-id="${vehicle.id}">
             <img src="./assets/icons/heart.svg" alt="Favorito">
           </button>
@@ -220,6 +226,80 @@ function createVehicleCard(vehicle) {
       </div>
     </div>
   `;
+}
+
+// Show vehicle details
+function showVehicleDetails(e) {
+  e.preventDefault();
+  const button = e.currentTarget;
+  const vehicleId = parseInt(button.getAttribute('data-vehicle-id'));
+  
+  // Find vehicle data
+  const vehicle = vehiclesData.find(v => v.id === vehicleId);
+  if (!vehicle) return;
+  
+  // Create modal content
+  const modal = document.createElement('div');
+  modal.className = 'vehicle-details-modal';
+  
+  modal.innerHTML = `
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>${vehicle.brand} ${vehicle.model} ${vehicle.year}</h3>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-image">
+          <img src="${vehicle.image}" alt="${vehicle.brand} ${vehicle.model}">
+          ${vehicle.badge ? `<div class="vehicle-badge">${vehicle.badge}</div>` : ''}
+        </div>
+        <div class="modal-price">$${formatPrice(vehicle.price)}</div>
+        <div class="modal-details">
+          <div class="detail-item">
+            <img src="./assets/icons/speedometer.svg" alt="Kilometraje">
+            <span>${formatMileage(vehicle.mileage)} km</span>
+          </div>
+          <div class="detail-item">
+            <img src="./assets/icons/fuel.svg" alt="Combustible">
+            <span>${vehicle.fuel}</span>
+          </div>
+          <div class="detail-item">
+            <img src="./assets/icons/gear.svg" alt="Transmisión">
+            <span>${vehicle.transmission}</span>
+          </div>
+          ${vehicle.type ? `
+          <div class="detail-item">
+            <img src="./assets/icons/car-sale.svg" alt="Tipo">
+            <span>${vehicle.type}</span>
+          </div>` : ''}
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-contact">Contactar</button>
+      </div>
+    </div>
+  `;
+  
+  // Add modal to the document
+  document.body.appendChild(modal);
+  
+  // Prevent body scrolling
+  document.body.style.overflow = 'hidden';
+  
+  // Add close button event listener
+  const closeButton = modal.querySelector('.modal-close');
+  closeButton.addEventListener('click', () => {
+    document.body.removeChild(modal);
+    document.body.style.overflow = '';
+  });
+  
+  // Close on click outside
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      document.body.removeChild(modal);
+      document.body.style.overflow = '';
+    }
+  });
 }
 
 // Toggle favorite state
@@ -249,3 +329,4 @@ function formatPrice(price) {
 function formatMileage(mileage) {
   return new Intl.NumberFormat('es-ES').format(mileage);
 }
+

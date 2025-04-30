@@ -1,244 +1,161 @@
-
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auto Vista Market</title>
-    <meta name="description" content="Premium vehicle marketplace for finding your dream car" />
-    <meta name="author" content="Auto Vista Market" />
-
+    <meta name="description" content="Encuentra el coche de tus sueños en Auto Vista Market. ¡Las mejores ofertas en vehículos nuevos y usados!">
+    <meta name="keywords" content="coches, vehículos, autos, venta de coches, coches nuevos, coches usados, ofertas de coches">
+    <meta name="author" content="Auto Vista Market">
+    
     <!-- Favicon -->
-    <link rel="icon" href="./assets/images/favicon.ico" />
+    <link rel="icon" href="./assets/images/favicon.png" type="image/png">
     
-    <!-- Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
-    
-    <!-- CSS files -->
-    <link rel="stylesheet" href="./css/styles.css" />
-    <link rel="stylesheet" href="./css/responsive.css" />
-  </head>
-
-  <body>
-    <div id="root">
-      <!-- Header -->
-      <header class="header">
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/vehicle-card.css">
+    <link rel="stylesheet" href="./css/toast.css">
+    <link rel="stylesheet" href="./css/vehicle-details.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
         <div class="container">
-          <div class="header-content">
-            <div class="logo">
-              <a href="index.html">
-                <h1>Auto<span>Vista</span></h1>
-              </a>
-            </div>
-            <nav class="navbar">
-              <ul class="nav-menu">
-                <li><a href="index.html" class="active">Inicio</a></li>
-                <li class="dropdown">
-                  <a href="./pages/vehicles.html">Vehículos</a>
-                  <div class="dropdown-menu">
-                    <a href="./pages/vehicles.html?type=nuevos">Nuevos</a>
-                    <a href="./pages/vehicles.html?type=usados">Seminuevos</a>
-                    <a href="./pages/vehicles.html?type=ofertas">Ofertas</a>
-                  </div>
-                </li>
-                <li class="dropdown">
-                  <a href="#">Marcas</a>
-                  <div class="dropdown-menu">
-                    <a href="./pages/vehicles.html?brand=Toyota">Toyota</a>
-                    <a href="./pages/vehicles.html?brand=Honda">Honda</a>
-                    <a href="./pages/vehicles.html?brand=Ford">Ford</a>
-                    <a href="./pages/vehicles.html?brand=Tesla">Tesla</a>
-                    <a href="./pages/vehicles.html?brand=BMW">BMW</a>
-                    <a href="./pages/vehicles.html?brand=Mercedes">Mercedes-Benz</a>
-                    <a href="./pages/vehicles.html?brand=Audi">Audi</a>
-                    <a href="./pages/vehicles.html?brand=Volkswagen">Volkswagen</a>
-                    <a href="./pages/vehicles.html?brand=Nissan">Nissan</a>
-                  </div>
-                </li>
-                <li><a href="./pages/about.html">Nosotros</a></li>
-                <li><a href="./pages/services.html">Servicios</a></li>
-                <li><a href="./pages/contact.html">Contacto</a></li>
-              </ul>
-            </nav>
-            <div class="header-buttons">
-              <button id="search-toggle" class="icon-button">
-                <span class="material-icons">search</span>
-              </button>
-              <button id="mobile-menu-toggle" class="icon-button mobile-menu-button">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-              </button>
-            </div>
-          </div>
-          <div id="search-container" class="search-container">
-            <form id="search-form">
-              <input type="text" placeholder="Buscar vehículos..." id="search-input">
-              <button type="submit" class="search-button">Buscar</button>
-            </form>
-          </div>
-        </div>
-      </header>
-
-      <!-- Hero Section -->
-      <section class="hero">
-        <div class="container">
-          <div class="hero-content">
-            <h2>Encuentra tu Vehículo Ideal</h2>
-            <p>Descubre nuestra selección premium de autos con las mejores ofertas del mercado</p>
-            <div class="hero-buttons">
-              <a href="./pages/vehicles.html" class="btn btn-primary">Ver Catálogo</a>
-              <a href="./pages/contact.html" class="btn btn-secondary">Contactar</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Featured Vehicles Section -->
-      <section class="featured-vehicles">
-        <div class="container">
-          <div class="section-header">
-            <h2>Vehículos Destacados</h2>
-            <p>Explora nuestra selección de vehículos premium</p>
-          </div>
-          <div class="vehicle-grid" id="featured-vehicles-container">
-            <!-- Vehicles will be loaded dynamically from JavaScript -->
-          </div>
-          <div class="section-footer">
-            <a href="./pages/vehicles.html" class="btn btn-outline">Ver Todos los Vehículos</a>
-          </div>
-        </div>
-      </section>
-
-      <!-- Services Section -->
-      <section class="services">
-        <div class="container">
-          <div class="section-header dark">
-            <h2>Nuestros Servicios</h2>
-            <p>Ofrecemos soluciones completas para tu vehículo</p>
-          </div>
-          <div class="services-grid">
-            <div class="service-card">
-              <div class="service-icon">
-                <img src="./assets/icons/car-sale.svg" alt="Compra y Venta">
-              </div>
-              <h3>Compra y Venta</h3>
-              <p>Adquiere o vende tu vehículo con nosotros de forma segura y transparente</p>
-            </div>
-            <div class="service-card">
-              <div class="service-icon">
-                <img src="./assets/icons/financing.svg" alt="Financiamiento">
-              </div>
-              <h3>Financiamiento</h3>
-              <p>Opciones flexibles de financiamiento adaptadas a tus necesidades</p>
-            </div>
-            <div class="service-card">
-              <div class="service-icon">
-                <img src="./assets/icons/maintenance.svg" alt="Mantenimiento">
-              </div>
-              <h3>Mantenimiento</h3>
-              <p>Servicio técnico especializado para mantener tu vehículo en perfectas condiciones</p>
-            </div>
-            <div class="service-card">
-              <div class="service-icon">
-                <img src="./assets/icons/insurance.svg" alt="Seguros">
-              </div>
-              <h3>Seguros</h3>
-              <p>Protección completa para tu vehículo con las mejores coberturas</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Testimonials Section -->
-      <section class="testimonials">
-        <div class="container">
-          <div class="section-header">
-            <h2>Opiniones de Clientes</h2>
-            <p>Lo que dicen nuestros clientes sobre nosotros</p>
-          </div>
-          <div class="testimonial-slider" id="testimonial-slider">
-            <!-- Testimonials will be loaded dynamically from JavaScript -->
-          </div>
-        </div>
-      </section>
-
-      <!-- Call to Action -->
-      <section class="cta">
-        <div class="container">
-          <div class="cta-content">
-            <h2>¿Listo para encontrar tu vehículo ideal?</h2>
-            <p>Nuestro equipo de expertos está listo para ayudarte</p>
-            <a href="./pages/contact.html" class="btn btn-light">Contáctanos Ahora</a>
-          </div>
-        </div>
-      </section>
-
-      <!-- Footer -->
-      <footer class="footer">
-        <div class="container">
-          <div class="footer-content">
-            <div class="footer-logo">
-              <h2>Auto<span>Vista</span></h2>
-              <p>Tu destino premium para vehículos de calidad</p>
-            </div>
-            <div class="footer-links">
-              <div class="footer-column">
-                <h3>Enlaces Rápidos</h3>
-                <ul>
-                  <li><a href="index.html">Inicio</a></li>
-                  <li><a href="./pages/vehicles.html">Vehículos</a></li>
-                  <li><a href="./pages/about.html">Nosotros</a></li>
-                  <li><a href="./pages/services.html">Servicios</a></li>
-                </ul>
-              </div>
-              <div class="footer-column">
-                <h3>Vehículos</h3>
-                <ul>
-                  <li><a href="#">Nuevos</a></li>
-                  <li><a href="#">Usados</a></li>
-                  <li><a href="#">Ofertas</a></li>
-                  <li><a href="#">Comparar</a></li>
-                </ul>
-              </div>
-              <div class="footer-column">
-                <h3>Soporte</h3>
-                <ul>
-                  <li><a href="./pages/contact.html">Contacto</a></li>
-                  <li><a href="#">FAQ</a></li>
-                  <li><a href="#">Ayuda</a></li>
-                  <li><a href="#">Términos</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="footer-newsletter">
-              <h3>Suscríbete a Nuestro Boletín</h3>
-              <p>Recibe las últimas ofertas y novedades</p>
-              <form id="newsletter-form">
-                <div class="form-group">
-                  <input type="email" placeholder="Tu correo electrónico" required>
-                  <button type="submit" class="btn btn-primary">Suscribirse</button>
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <img src="./assets/images/logo.svg" alt="Auto Vista Market Logo">
+                </a>
+                <nav class="navigation">
+                    <ul>
+                        <li><a href="/">Inicio</a></li>
+                        <li><a href="./pages/vehicles.html">Vehículos</a></li>
+                        <li><a href="#">Nosotros</a></li>
+                        <li><a href="#">Servicios</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <button class="btn-search">
+                        <img src="./assets/icons/search.svg" alt="Buscar">
+                    </button>
+                    <button class="btn-menu">
+                        <img src="./assets/icons/menu.svg" alt="Menú">
+                    </button>
                 </div>
-              </form>
             </div>
-          </div>
-          <div class="footer-bottom">
-            <div class="social-links">
-              <a href="#" class="social-link"><img src="./assets/icons/facebook.svg" alt="Facebook"></a>
-              <a href="#" class="social-link"><img src="./assets/icons/instagram.svg" alt="Instagram"></a>
-              <a href="#" class="social-link"><img src="./assets/icons/twitter.svg" alt="Twitter"></a>
-              <a href="#" class="social-link"><img src="./assets/icons/youtube.svg" alt="YouTube"></a>
-            </div>
-            <p class="copyright">&copy; 2025 AutoVista Market. Todos los derechos reservados.</p>
-          </div>
         </div>
-      </footer>
-    </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Encuentra el coche de tus sueños</h1>
+                <p>Las mejores ofertas en vehículos nuevos y usados. ¡Descúbrelas ahora!</p>
+                <a href="./pages/vehicles.html" class="btn-primary">Ver vehículos</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Vehicles Section -->
+    <section class="featured-vehicles">
+        <div class="container">
+            <h2>Vehículos Destacados</h2>
+            <div class="featured-vehicles-container" id="featured-vehicles-container">
+                <!-- Featured vehicles will be loaded here by JavaScript -->
+            </div>
+            <div class="view-all-vehicles">
+                <a href="./pages/vehicles.html" class="btn-secondary">Ver todos los vehículos</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="why-choose-us">
+        <div class="container">
+            <h2>¿Por qué elegirnos?</h2>
+            <div class="reasons-container">
+                <div class="reason">
+                    <img src="./assets/icons/car-search.svg" alt="Amplia selección">
+                    <h3>Amplia selección</h3>
+                    <p>Tenemos una gran variedad de vehículos para que encuentres el perfecto para ti.</p>
+                </div>
+                <div class="reason">
+                    <img src="./assets/icons/credit-card.svg" alt="Financiación fácil">
+                    <h3>Financiación fácil</h3>
+                    <p>Ofrecemos opciones de financiación flexibles para adaptarnos a tu presupuesto.</p>
+                </div>
+                <div class="reason">
+                    <img src="./assets/icons/guarantee.svg" alt="Garantía de calidad">
+                    <h3>Garantía de calidad</h3>
+                    <p>Todos nuestros vehículos pasan por una rigurosa inspección para garantizar su calidad.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>Testimonios</h2>
+            <div class="testimonials-container">
+                <div class="testimonial">
+                    <img src="./assets/images/avatar1.jpg" alt="Cliente satisfecho">
+                    <p>"¡Encontré el coche perfecto para mi familia! El servicio fue excelente y la financiación muy sencilla."</p>
+                    <p class="customer-name">- María Rodríguez</p>
+                </div>
+                <div class="testimonial">
+                    <img src="./assets/images/avatar2.jpg" alt="Cliente satisfecho">
+                    <p>"Estoy muy contento con mi compra. El coche está en perfectas condiciones y el precio fue muy competitivo."</p>
+                    <p class="customer-name">- Juan Pérez</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <div class="container">
+            <h2>¿Listo para encontrar tu coche ideal?</h2>
+            <p>Contáctanos hoy mismo y te ayudaremos a encontrar el vehículo perfecto para ti.</p>
+            <a href="#" class="btn-primary">Contáctanos</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="./assets/images/logo.svg" alt="Auto Vista Market Logo">
+                </div>
+                <nav class="footer-navigation">
+                    <ul>
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="./pages/vehicles.html">Vehículos</a></li>
+                        <li><a href="#">Nosotros</a></li>
+                        <li><a href="#">Servicios</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </nav>
+                <div class="footer-social">
+                    <a href="#"><img src="./assets/icons/facebook.svg" alt="Facebook"></a>
+                    <a href="#"><img src="./assets/icons/twitter.svg" alt="Twitter"></a>
+                    <a href="#"><img src="./assets/icons/instagram.svg" alt="Instagram"></a>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2024 Auto Vista Market. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast"></div>
 
     <!-- Scripts -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-    <script src="./js/main.js" type="module"></script>
-    <script src="./js/slider.js" type="module"></script>
-    <script src="./js/vehicles.js" type="module"></script>
-  </body>
+    <script src="./js/toast.js"></script>
+    <script src="./js/vehicles.js"></script>
+</body>
 </html>
