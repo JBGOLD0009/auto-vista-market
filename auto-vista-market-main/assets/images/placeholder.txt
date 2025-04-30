@@ -1,0 +1,25 @@
+
+This folder will contain images for the application.
+
+Required images:
+- hero-bg.jpg (Hero background image)
+- cta-bg.jpg (Call to action background image)
+- vehicles-banner.jpg (Vehicles page banner image)
+- vehicles/toyota-rav4.jpg
+- vehicles/honda-civic.jpg
+- vehicles/ford-mustang.jpg
+- vehicles/tesla-model3.jpg
+- vehicles/bmw-x5.jpg
+- vehicles/mercedes-cclass.jpg
+- vehicles/audi-q5.jpg
+- vehicles/vw-golf.jpg
+- vehicles/nissan-frontier.jpg
+- vehicles/lexus-rx.jpg
+- vehicles/hyundai-tucson.jpg
+- vehicles/kia-sportage.jpg
+- testimonials/person1.jpg
+- testimonials/person2.jpg
+- testimonials/person3.jpg
+- favicon.ico
+
+Please add these images to make the application complete.
