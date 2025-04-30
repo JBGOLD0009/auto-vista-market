@@ -1,4 +1,3 @@
-
 // Vehicle data and functionality
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -238,6 +237,14 @@ function showVehicleDetails(e) {
   const vehicle = vehiclesData.find(v => v.id === vehicleId);
   if (!vehicle) return;
   
+  // Check if we're using the React version of the site
+  if (window.ReactVehicleDetailsDialog) {
+    // Call the React component
+    window.openVehicleDetailsDialog(vehicle);
+    return;
+  }
+  
+  // If React is not available, use the vanilla JS modal
   // Create modal content
   const modal = document.createElement('div');
   modal.className = 'vehicle-details-modal';
@@ -330,3 +337,7 @@ function formatMileage(mileage) {
   return new Intl.NumberFormat('es-ES').format(mileage);
 }
 
+// Expose functions to window to be used by React components
+window.vehiclesData = vehiclesData;
+window.formatPrice = formatPrice;
+window.formatMileage = formatMileage;

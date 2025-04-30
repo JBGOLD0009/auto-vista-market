@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -107,3 +107,8 @@ const VehicleDetailsDialog: React.FC<VehicleDetailsProps> = ({
 };
 
 export default VehicleDetailsDialog;
+
+// Expose to vanilla JS
+if (typeof window !== 'undefined') {
+  window.ReactVehicleDetailsDialog = VehicleDetailsDialog;
+}
