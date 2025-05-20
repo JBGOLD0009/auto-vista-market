@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Detalles del Vehículo</title>
+  <style>
+    /* Reset básico */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: #f5f7fa;
+      color: #333;
+      line-height: 1.6;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 800px;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    
+    h1 {
+      margin-bottom: 15px;
+      font-size: 2rem;
+      color: #222;
+    }
+    
+    .vehicle-image {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .vehicle-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    
+    .vehicle-image img:hover {
+      transform: scale(1.05);
+    }
+    
+    .badge {
+      display: inline-block;
+      background: #ff9800;
+      color: white;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      user-select: none;
+    }
+    
+    .details-list {
+      list-style: none;
+      margin-bottom: 25px;
+      font-size: 1.1rem;
+    }
+    
+    .details-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .details-list li strong {
+      color: #555;
+    }
+    
+    a.back-link {
+      display: inline-block;
+      text-decoration: none;
+      color: #007bff;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    
+    a.back-link:hover {
+      color: #0056b3;
+    }
+    
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+      
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="vehicle-detail-container">
+    <!-- Detalles del vehículo se cargarán aquí -->
+  </div>
+
+  <script>
+    // Datos ejemplo de vehículos (puedes cargar estos datos desde un archivo o API real)
+    const allVehiclesData = [
+      {
+    id: 1,
+    brand: 'Toyota',
+    model: 'RAV4',
+    year: 2023,
+    price: 32900,
+    mileage: 0,
+    fuel: 'Hybrid',
+    transmission: 'Automática',
+    type: 'SUV',
+    image: '../assets/images/toyota-rav4.jpg',
+    badge: 'Nuevo'
+  },
+  {
+    id: 2,
+    brand: 'Honda',
+    model: 'Civic',
+    year: 2022,
+    price: 25500,
+    mileage: 15000,
+    fuel: 'Gasolina',
+    transmission: 'Automática',
+    type: 'Sedán',
+    image: '../assets/images/honda-civic.jpg',
+    badge: 'Seminuevo'
+  },
+  {
+    id: 3,
+    brand: 'Ford',
+    model: 'Mustang',
+    year: 2021,
+    price: 45000,
+    mileage: 8000,
+    fuel: 'Gasolina',
+    transmission: 'Manual',
+    type: 'Coupé',
+    image: '../assets/images/ford-mustang.jpg',
+    badge: 'Oferta'
+  },
+  {
+    id: 4,
+    brand: 'Tesla',
+    model: 'Model 3',
+    year: 2023,
+    price: 52000,
+    mileage: 0,
+    fuel: 'Eléctrico',
+    transmission: 'Automática',
+    type: 'Sedán',
+    image: '../assets/images/tesla-model3.jpg',
+    badge: 'Premium'
+  },
+  {
+    id: 5,
+    brand: 'BMW',
+    model: 'X5',
+    year: 2022,
+    price: 68000,
+    mileage: 12000,
+    fuel: 'Diesel',
+    transmission: 'Automática',
+    type: 'SUV',
+    image: '../assets/images/bmw-x5.jpg',
+    badge: 'Lujo'
+  },
+  {
+    id: 6,
+    brand: 'Mercedes-Benz',
+    model: 'C-Class',
+    year: 2023,
+    price: 55000,
+    mileage: 5000,
+    fuel: 'Gasolina',
+    transmission: 'Automática',
+    type: 'Sedán',
+    image: '../assets/images/mercedes-cclass.jpg',
+    badge: 'Premium'
+  },
+  // Additional vehicles
+  {
+    id: 7,
+    brand: 'Audi',
+    model: 'Q5',
+    year: 2022,
+    price: 57800,
+    mileage: 8500,
+    fuel: 'Gasolina',
+    transmission: 'Automática',
+    type: 'SUV',
+    image: '../assets/images/audi-q5.jpg',
+    badge: 'Premium'
+  },
+  {
+    id: 8,
+    brand: 'Volkswagen',
+    model: 'Golf',
+    year: 2021,
+    price: 27500,
+    mileage: 18000,
+    fuel: 'Gasolina',
+    transmission: 'Manual',
+    type: 'Hatchback',
+    image: '../assets/images/vw-golf.jpg'
+  },
+  {
+    id: 9,
+    brand: 'Nissan',
+    model: 'Frontier',
+    year: 2023,
+    price: 38000,
+    mileage: 0,
+    fuel: 'Diesel',
+    transmission: 'Automática',
+    type: 'Pickup',
+    image: '../assets/images/nissan-frontier.jpg',
+    badge: 'Nuevo'
+  },
+  {
+    id: 10,
+    brand: 'Lexus',
+    model: 'RX',
+    year: 2022,
+    price: 65000,
+    mileage: 10000,
+    fuel: 'Híbrido',
+    transmission: 'Automática',
+    type: 'SUV',
+    image: '../assets/images/lexus-rx.jpg',
+    badge: 'Lujo'
+  },
+  {
+    id: 11,
+    brand: 'Hyundai',
+    model: 'Tucson',
+    year: 2022,
+    price: 32000,
+    mileage: 15000,
+    fuel: 'Gasolina',
+    transmission: 'Automática',
+    type: 'SUV',
+    image: '../assets/images/hyundai-tucson.jpg'
+  },
+  {
+    id: 12,
+    brand: 'Kia',
+    model: 'Sportage',
+    year: 2023,
+    price: 33500,
+    mileage: 1000,
+    fuel: 'Gasolina',
+    transmission: 'Automática',
+    type: 'SUV',
+    image: '../assets/images/kia-sportage.jpg',
+    badge: 'Oferta'
+  },
+  // New vehicles
+  {
+    id: 13,
+    brand: 'Mazda',
+    model: 'CX-5',
+    year: 2022,
+    price: 34900,
+    mileage: 5000,
+    fuel: 'Gasolina',
+    transmission: 'Automática',
+    type: 'SUV',
+    image: '../assets/images/mazda-cx5.jpg',
+    badge: 'Seminuevo'
+  },
+  {
+    id: 14,
+    brand: 'Subaru',
+    model: 'Forester',
+    year: 2023,
+    price: 36700,
+    mileage: 0,
+    fuel: 'Gasolina',
+    transmission: 'Automática',
+    type: 'SUV',
+    image: '../assets/images/subaru-forester.jpg',
+    badge: 'Nuevo'
+  },
+  {
+    id: 15,
+    brand: 'Jeep',
+    model: 'Wrangler',
+    year: 2022,
+    price: 49800,
+    mileage: 7000,
+    fuel: 'Gasolina',
+    transmission: 'Manual',
+    type: 'SUV',
+    image: '../assets/images/jeep-wrangler.jpg',
+    badge: 'Premium'
+  },
+  {
+    id: 16,
+    brand: 'Chevrolet',
+    model: 'Camaro',
+    year: 2021,
+    price: 52000,
+    mileage: 12000,
+    fuel: 'Gasolina',
+    transmission: 'Automática',
+    type: 'Coupé',
+    image: '../assets/images/chevrolet-camaro.jpg',
+    badge: 'Oferta'
+  },
+  {
+    id: 17,
+    brand: 'Volvo',
+    model: 'XC60',
+    year: 2023,
+    price: 59900,
+    mileage: 0,
+    fuel: 'Híbrido',
+    transmission: 'Automática',
+    type: 'SUV',
+    image: '../assets/images/volvo-xc60.jpg',
+    badge: 'Nuevo'
+  },
+  {
+    id: 18,
+    brand: 'Porsche',
+    model: 'Cayenne',
+    year: 2022,
+    price: 89500,
+    mileage: 5000,
+    fuel: 'Gasolina',
+    transmission: 'Automática',
+    type: 'SUV',
+    image: '../assets/images/porsche-cayenne.jpg',
+    badge: 'Lujo'
+  },
+  {
+    id: 19,
+    brand: 'Land Rover',
+    model: 'Range Rover',
+    year: 2023,
+    price: 94000,
+    mileage: 0,
+    fuel: 'Diesel',
+    transmission: 'Automática',
+    type: 'SUV',
+    image: '../assets/images/range-rover.jpg',
+    badge: 'Lujo'
+  },
+  {
+    id: 20,
+    brand: 'Mini',
+    model: 'Cooper',
+    year: 2022,
+    price: 31800,
+    mileage: 10000,
+    fuel: 'Gasolina',
+    transmission: 'Manual',
+    type: 'Hatchback',
+    image: '../assets/images/mini-cooper.jpg',
+    badge: 'Premium'
+  }
+    ];
+
+    // Función para obtener el ID desde la URL (?id=)
+    function getVehicleIdFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('id');
+    }
+
+    // Función para formatear precio en USD con separadores
+    function formatPrice(price) {
+      return price.toLocaleString('es-ES', { style: 'currency', currency: 'USD' });
+    }
+
+    // Función para mostrar detalles del vehículo
+    function showVehicleDetails(vehicle) {
+      const container = document.getElementById('vehicle-detail-container');
+      if (!vehicle) {
+        container.innerHTML = '<p style="color: #900; font-weight: bold;">Vehículo no encontrado.</p>';
+        return;
+      }
+
+      container.innerHTML = `
+        <h1>${vehicle.brand} ${vehicle.model} (${vehicle.year})</h1>
+        <div class="vehicle-image">
+          <img src="${vehicle.image}" alt="${vehicle.brand} ${vehicle.model}">
+          ${vehicle.badge ? `<div class="badge">${vehicle.badge}</div>` : ''}
+        </div>
+        <ul class="details-list">
+          <li><strong>Precio:</strong> <span>${formatPrice(vehicle.price)}</span></li>
+          <li><strong>Kilometraje:</strong> <span>${vehicle.mileage.toLocaleString()} km</span></li>
+          <li><strong>Combustible:</strong> <span>${vehicle.fuel}</span></li>
+          <li><strong>Transmisión:</strong> <span>${vehicle.transmission}</span></li>
+          <li><strong>Tipo:</strong> <span>${vehicle.type}</span></li>
+        </ul>
+        <a href="vehicles.html" class="back-link">← Volver a la lista de vehículos</a>
+      `;
+    }
+
+    // Cuando cargue la página
+    document.addEventListener('DOMContentLoaded', () => {
+      const vehicleId = parseInt(getVehicleIdFromURL());
+      const vehicle = allVehiclesData.find(v => v.id === vehicleId);
+      showVehicleDetails(vehicle);
+    });
+  </script>
+</body>
+</html>
